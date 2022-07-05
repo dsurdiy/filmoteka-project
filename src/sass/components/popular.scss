@@ -1,18 +1,102 @@
+.container {
+    display: flex;
+    justify-content: center;
+}
+
 .popular__mov{
-    padding-top: 60px; 
-    padding-bottom: 60px; 
-    display: grid;
-    max-width: 1280px;
-    grid-template-columns: repeat(auto-fit, minmax(394px, 1fr));
-    gap: 32px 16px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
     justify-content: center;
     margin-left: auto;
     margin-right: auto;
+    font-family: Roboto;
 }
+
+@media screen and (min-width: 320px) and (max-width: 767px) {
+    .popular__mov {
+        padding-top: 20px; 
+        padding-bottom: 20px; 
+    }
+    .movie {
+     width: 280px;
+     &:not(last-child) {
+         margin-bottom: 32px;
+       }
+    }
+    .movie-info h3{
+        font-size: 12px;
+        line-height: 1.16;
+    }
+    .movie__description {
+        font-size: 12px;
+        line-height: 1.16;
+    }
+ }
+
+ @media screen and (min-width: 768px) and (max-width: 1279px) {
+    .popular__mov {
+        padding-top: 59px; 
+        padding-bottom: 59px; 
+    }
+    .movie {
+       width: 336px;
+       font-size: 12px;
+       line-height: 1.16;
+       &:nth-child(2n+1) {
+        margin-right: 32px;
+    }
+      &:nth-child(-n+18) {
+        margin-bottom: 32px;
+      }
+      &:nth-last-child(-n+2) {
+        margin-bottom: 0;
+    }
+    }
+    .movie-info h3{
+        font-size: 12px;
+        line-height: 1.33;
+    }
+    .movie__description {
+        font-size: 12px;
+        line-height: 1.33;
+    }
+}
+
+@media screen and (min-width: 1280px) {
+    .popular__mov {
+        justify-content: start;
+        padding-top: 60px; 
+        padding-bottom: 60px; 
+    }
+    .movie {
+        width: 394px;
+        margin-right: 16px;
+        margin-bottom: 32px;
+        &:nth-child(3n) {
+            margin-right: 0;
+        }
+        &:nth-last-child(-n+2) {
+            margin-bottom: 0;
+        }
+        &:last-child {
+            margin-right: 0;
+        }
+    }
+    .movie-info h3{
+        font-size: 20px;
+        line-height: 1.2;
+    }
+    .movie__description {
+        font-size: 20px;
+        line-height: 1.2;
+    }
+}
+
 
 .movie {
     border-radius: 3px;
-    box-shadow: 0.2px 4px 5px rgba(0,0,0,0.1);
+    // box-shadow: 0.2px 4px 5px rgba(0,0,0,0.1);
     background-color: var(--secondary-color);
     position:relative;
     overflow: hidden;
@@ -27,14 +111,12 @@
     margin-top: 12px;
     font-family: Roboto;
     font-weight: 500;
-    font-size: 20px;
     color: #000000;
 }
 
 .movie__description {
     font-family: Roboto;
     font-weight: 500;
-    font-size: 20px;
     color: #FF6B08;
     display: flex;
 }
