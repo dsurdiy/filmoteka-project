@@ -92,10 +92,17 @@ function popularOnPageLoad() {
     getMovies(API_URL);
 }
 
-function getMovies(url) {
-    fetch(url).then(res => res.json()).then(data => {
-        showMovies(data.results);
-    })
+async function getMovies(url) {
+    try {
+        const response = await fetch(url);
+        const toJson = await response.json();
+       
+        showMovies(toJson.results);
+      }
+    
+    catch (error) {
+      console.log(error);
+    }
 }
 
 function showMovies(data) {
