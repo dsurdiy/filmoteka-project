@@ -10,8 +10,9 @@ const refs = {
 }
 const API_KEY = '1b50ba0e0b99203af5e26bdcee6d2298'
 
-refs.cardsWrapper.addEventListener('click', onMovieClick)
-
+// ---------------------- Should be added OR for library -----------------------------------------
+if (refs.cardsWrapper) {refs.cardsWrapper.addEventListener('click', onMovieClick)}
+// -----------------------------------------------------------------------------------------------
   
 async function getDetails(id) {
 
