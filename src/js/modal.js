@@ -30,19 +30,23 @@ async function getDetails(id) {
 async function onMovieClick(e) {
   const movieCard = e.target.closest('.movie');
   const movieId = movieCard.dataset.movieid;
-  console.log(movieId);
+
   const response = await getDetails(movieId)
-  console.log(response);
+
   renderModal()
   refs.filmDetails.insertAdjacentHTML('beforeend', modalMarkup(response)) 
   
 }
   
 function modalMarkup(res) {
-  console.log(res);
-    
-   const markup = `
-   
+  
+    const background = `https://image.tmdb.org/t/p/original/${res.backdrop_path}`;
+    refs.backdrop.style.backgroundImage = `url('${background}')`;
+    refs.backdrop.style.backgroundSize = 'cover';
+    refs.backdrop.style.backgroundPosition = '50% 50%';
+   const markup = 
+   `
+     
       <img
         class="film-details__image"
         src="https://image.tmdb.org/t/p/w500${
