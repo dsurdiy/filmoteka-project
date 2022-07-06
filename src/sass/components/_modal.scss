@@ -70,7 +70,11 @@
 
   
    cursor: pointer;
-   
+   &:hover,
+   &:focus {
+     background-color:#FF6B01;
+     border-radius: 12%;
+   }
 }
 
 
