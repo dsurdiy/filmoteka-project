@@ -34,7 +34,7 @@
       height: 100vh;
    }
    background-color: #000000;
-   opacity: 0.25;
+   opacity: 1;
 }
 
 .modal {
@@ -68,9 +68,14 @@
    width: 30px;
    height: 30px;
 
-  
+   transition-duration: 450ms;
+   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
    cursor: pointer;
-   
+   &:hover,
+   &:focus {
+     background-color:#FF6B01;
+     border-radius: 12%;
+   }
 }
 
 

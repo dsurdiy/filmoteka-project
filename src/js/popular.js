@@ -107,7 +107,7 @@ async function getMovies(url) {
 
 function showMovies(data) {
 
-    const markup = data.map(({title, poster_path, release_date, genre_ids}) => {
+    const markup = data.map(({title, poster_path, release_date, genre_ids, id}) => {
        let movieGenre;
 
         movieGenre = genres.filter(el => el.id === genre_ids[0] || el.id === genre_ids[1] || el.id === genre_ids[2])
@@ -116,8 +116,8 @@ function showMovies(data) {
         let dateToYear = new Date(release_date);
         const year = dateToYear.getFullYear();
 
-        return `<div class="movie">
-            <a class="popular__link" href="${poster_path}"><img class="popular__image" src="${poster_path? IMG_URL+poster_path: "http://via.placeholder.com/1080x1580" }" alt="${title}"></a>
+        return `<div class="movie" data-movieid=${id}>
+            <img class="popular__image" src="${poster_path? IMG_URL+poster_path: "http://via.placeholder.com/1080x1580" }" alt="${title}">
                 <div class="movie-info">
                     <h3>${title.toUpperCase()}</h3>
                     <div class="movie__description"> 
@@ -127,5 +127,6 @@ function showMovies(data) {
                 </div>
         </div>`
     }).join("");
+    
     main.insertAdjacentHTML('beforeend', markup);
 }
