@@ -105,7 +105,7 @@ async function getMovies(url) {
     }
 }
 
-function showMovies(data) {
+export function showMovies(data) {
 
     const markup = data.map(({title, poster_path, release_date, genre_ids, id}) => {
        let movieGenre;
