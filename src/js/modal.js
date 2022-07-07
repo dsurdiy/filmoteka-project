@@ -1,12 +1,14 @@
 import axios from 'axios'
 
+
 const refs = {
-   cardsWrapper: document.querySelector('.popular__mov'),
-   modal: document.querySelector('.film-details'),
-   closeBtn: document.querySelector('.modal__icon-close'),
-   modalWrapper: document.querySelector('.modal-wrapper'),
-   backdrop: document.querySelector('.backdrop'),
-   filmDetails: document.querySelector('.film-details'),
+  cardsWrapper: document.querySelector('.popular__mov'),
+  modal: document.querySelector('.film-details'),
+  closeBtn: document.querySelector('.modal__icon-close'),
+  modalWrapper: document.querySelector('.modal-wrapper'),
+  backdrop: document.querySelector('.backdrop'),
+  filmDetails: document.querySelector('.film-details'),
+ 
 }
 const API_KEY = '1b50ba0e0b99203af5e26bdcee6d2298'
 
@@ -29,14 +31,22 @@ async function getDetails(id) {
 
 
 async function onMovieClick(e) {
+
+  if (e.target === refs.cardsWrapper) {
+    return 
+  }
+  
+  
   const movieCard = e.target.closest('.movie');
   const movieId = movieCard.dataset.movieid;
-
   const response = await getDetails(movieId)
-
+ 
   renderModal()
   refs.filmDetails.insertAdjacentHTML('beforeend', modalMarkup(response)) 
   
+  onFilmBtnClick()
+
+
 }
   
 function modalMarkup(res) {
@@ -55,7 +65,7 @@ function modalMarkup(res) {
    }"
         alt="${res.title}"
       />
-      <div class="film-details__wrapper">
+      <div class="film-details__wrapper" data-movieid=${res.id}>
         <h2 class="film-details__title">${res.title}</h2>
         <ul class="film-details__list ">
           <li class="film-details__item">
@@ -101,6 +111,7 @@ function modalMarkup(res) {
    
    
   `  
+  
   return markup
 }
 
@@ -145,10 +156,48 @@ function renderModal() {
   
 }
 
+////////localStorage////////
+
+const WATCHED_LOCALSTORAGE_KEY = 'Watched'
+const QUEUE_LOCALSTORAGE_KEY = 'Queue'
+let watched = []
+let queue = []
+
+function getFilmId(e) {
+  
+ const filmDetailsWrapper = e.target.closest('.film-details__wrapper')
+  const filmDetailsId = filmDetailsWrapper.dataset.movieid
+  
+  if (e.target.classList.value === 'film-details__btn film-details__btn--watched') {
+    watchedLocalStorage(filmDetailsId)
+    e.target.textContent = 'movie added to watched'
+  }
+
+  if (e.target.classList.value === 'film-details__btn film-details__btn--queue') {
+    queueLocalStorage(filmDetailsId)
+    e.target.textContent = 'movie added to queue'
+  }
+  
+}
+
+function watchedLocalStorage(id) { 
+  
+  watched.push(id)
+    localStorage.setItem(WATCHED_LOCALSTORAGE_KEY, JSON.stringify(watched))
+
+}
 
 
+function queueLocalStorage(id) {
+ 
+  queue.push(id)
+    localStorage.setItem(QUEUE_LOCALSTORAGE_KEY, JSON.stringify(queue))
+}
 
-
-
-
-
+   
+function onFilmBtnClick() {
+  const watchedBtn = document.querySelector('.film-details__btn--watched')
+  const queueBtn = document.querySelector('.film-details__btn--queue')
+   queueBtn.addEventListener('click', getFilmId) || watchedBtn.addEventListener('click', getFilmId)
+   
+}
