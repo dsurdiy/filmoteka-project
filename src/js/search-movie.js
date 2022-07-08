@@ -6,7 +6,6 @@ const refs = {
     galleryMovie: document.querySelector('#search-movie'),
 };
 const newsApiService = new NewsApiService();
-console.log(newsApiService);
 
 refs.searchForm.addEventListener('submit', onSearch);
 
@@ -39,7 +38,7 @@ async function fetchThemovie() {
     try {
         // loadMoreBtn.disable();
         const res = await newsApiService.fetchThemovie('results');
-        console.log(res);
+      
         if (res) {
             appendArticlesMarkup(res);
         }
