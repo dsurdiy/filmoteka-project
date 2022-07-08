@@ -9,14 +9,12 @@ export default class NewsApiService {
     }
 
     async fetchThemovie() {
-        console.log('До запроса ', this);
 
         const url = `${BASE_URL}?api_key=${API_KEY}&language=en-US&page=${this.page}&include_adult=false&query=${this.searchQuery}`;
 
         try {
             const axiosFetch = await axios.get(url);
-            console.log(axiosFetch);
-            console.log('После запроса, если ок ', this);
+         
             const { data } = axiosFetch;
 
             this.incrementPage();
