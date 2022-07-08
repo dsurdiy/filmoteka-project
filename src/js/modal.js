@@ -8,9 +8,12 @@ const refs = {
   modalWrapper: document.querySelector('.modal-wrapper'),
   backdrop: document.querySelector('.backdrop'),
   filmDetails: document.querySelector('.film-details'),
- 
+  iframe: document.querySelector('.trailer__trailer-iframe'),
+  frameWrap: document.querySelector('.modal__frame-wrap'),
+  closeFrameBtn: document.querySelector('.trailer__frame-close')
 }
 const API_KEY = '1b50ba0e0b99203af5e26bdcee6d2298'
+const BASE_URL = 'https://api.themoviedb.org/3/'
 
 // ---------------------- Should be added OR for library -----------------------------------------
 if (refs.cardsWrapper) {refs.cardsWrapper.addEventListener('click', onMovieClick)}
@@ -19,7 +22,7 @@ if (refs.cardsWrapper) {refs.cardsWrapper.addEventListener('click', onMovieClick
 async function getDetails(id) {
 
   try {
-    return await axios.get(`https://api.themoviedb.org/3/movie/${id}?api_key=${API_KEY}`)
+    return await axios.get(`${BASE_URL}movie/${id}?api_key=${API_KEY}`)
     .then( response => {
       return response.data
     })
@@ -28,6 +31,7 @@ async function getDetails(id) {
     console.log(error);
   }
 }
+
 
 
 async function onMovieClick(e) {
@@ -46,15 +50,21 @@ async function onMovieClick(e) {
   
   onFilmBtnClick()
 
-
-}
   
+  onBtnFilmTrailerClick()
+  
+}
+
+
+
+
 function modalMarkup(res) {
   
-    const background = `https://image.tmdb.org/t/p/original/${res.backdrop_path}`;
-    refs.backdrop.style.backgroundImage = `url('${background}')`;
-    refs.backdrop.style.backgroundSize = 'cover';
-    refs.backdrop.style.backgroundPosition = '50% 50%';
+  const background = `https://image.tmdb.org/t/p/original/${res.backdrop_path}`;
+  refs.backdrop.style.backgroundImage = `url('${background}')`;
+  refs.backdrop.style.backgroundSize = 'cover';
+  refs.backdrop.style.backgroundPosition = '50% 50%';
+  
    const markup = 
    `
      
@@ -65,7 +75,9 @@ function modalMarkup(res) {
    }"
         alt="${res.title}"
       />
+     
       <div class="film-details__wrapper" data-movieid=${res.id}>
+        <button class="film-trailer__btn film-details__btn">Watch Trailer</button>
         <h2 class="film-details__title">${res.title}</h2>
         <ul class="film-details__list ">
           <li class="film-details__item">
@@ -96,9 +108,7 @@ function modalMarkup(res) {
         <p class="film-details__overview">
           ${res.overview}
         </p>
-
        
-
         <ul class="film-details__btn-list">
           <li class="film-details__btn-item">
             <button type="button" class="film-details__btn film-details__btn--watched">add to Watched</button>
@@ -108,7 +118,7 @@ function modalMarkup(res) {
           </li>
         </ul>
       </div>
-   
+        
    
   `  
   
@@ -120,11 +130,13 @@ function modalMarkup(res) {
 
 
 function closeModalBackdrop(e) {
-
-  if (e.target.classList.value !== "backdrop") {
+  
+  if (e.target.classList.value !== "backdrop" ) {
     return;
   }
   closeModal();
+  
+  
 }
 
 function closeModalEscape(e) {
@@ -132,22 +144,30 @@ function closeModalEscape(e) {
     return;
   }
   closeModal();
+  
 }
 
 
 function closeModal() {
-   refs.modalWrapper.classList.add('is-hidden')
-   refs.backdrop.removeEventListener('click' , closeModal)
-   document.removeEventListener('keydown', e => closeModalEscape(e))
+ 
+  refs.modalWrapper.classList.add('is-hidden')
+  
+  refs.backdrop.removeEventListener('click' , closeModal)
+  
+  
+  document.removeEventListener('keydown', e => closeModalEscape(e))
 }
 
 function toggleModal() {
+ 
   refs.closeBtn.addEventListener('click', closeModal);
-  refs.backdrop.addEventListener('click',e => closeModalBackdrop(e));
+  refs.backdrop.addEventListener('click', e => closeModalBackdrop(e))
+
   document.addEventListener('keydown', e => closeModalEscape(e)); 
    
 }
 function renderModal() {
+
   refs.filmDetails.textContent = ''
   refs.modalWrapper.classList.remove('is-hidden');
   
@@ -200,4 +220,48 @@ function onFilmBtnClick() {
   const queueBtn = document.querySelector('.film-details__btn--queue')
    queueBtn.addEventListener('click', getFilmId) || watchedBtn.addEventListener('click', getFilmId)
    
+}
+////////MovieTrailer/////////
+
+async function getMovieVideo(id) {
+    try {
+      const url = `${BASE_URL}movie/${id}/videos?api_key=${API_KEY}&language=en`;
+      const response = await axios.get(url);
+     
+      
+      refs.iframe.src = `https://www.youtube.com/embed/${response.data.results[0].key}` 
+      
+    } catch (error) {
+      console.log(error);
+    }
+}
+
+function movieTrailer(e) {
+
+  const filmDetailsWrapper = e.target.closest('.film-details__wrapper')
+  const filmTrailerId = filmDetailsWrapper.dataset.movieid
+  getMovieVideo(filmTrailerId)
+ toggleModal()
+  refs.frameWrap.classList.remove('is-hidden-frame');
+  
+}
+function closeFrame() {
+  
+ refs.frameWrap.classList.add('is-hidden-frame')
+  refs.iframe.src = ''
+  toggleModal()
+  
+}
+
+function onBtnFilmTrailerClick() {
+  
+  
+  refs.closeFrameBtn.addEventListener('click', closeFrame)
+  
+  const filmTrailer = document.querySelector('.film-trailer__btn')
+  
+  filmTrailer.addEventListener('click', movieTrailer)
+
+  
+  
 }
