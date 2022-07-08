@@ -15,9 +15,9 @@ queueBtn.addEventListener("click", queue);
 let watchedMoviesId = [];
 
 function watched() {
-    //watchedMoviesId = localStorage.getItem("Watched")
-    clearQueue();
-     watchedMoviesId = [453395, 924482, 667739,507086]
+  
+  clearQueue();
+  watchedMoviesId = JSON.parse(localStorage.getItem("Watched"));
     watchedMoviesId.map(id => {
         getWQMovies(id)
     })
@@ -26,8 +26,7 @@ function watched() {
 
 function queue() {
     clearWatched();
-    //watchedMoviesId = localStorage.getItem("Queue")
-      watchedMoviesId = [507086,526896,634649]
+    watchedMoviesId = JSON.parse(localStorage.getItem("Queue"));
     watchedMoviesId.map(id => {
         getWQMovies(id)
     })
