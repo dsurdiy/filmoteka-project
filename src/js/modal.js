@@ -11,7 +11,9 @@ const refs = {
   iframe: document.querySelector('.trailer__trailer-iframe'),
   frameWrap: document.querySelector('.modal__frame-wrap'),
   closeFrameBtn: document.querySelector('.trailer__frame-close')
+  
 }
+let response = null
 const API_KEY = '1b50ba0e0b99203af5e26bdcee6d2298'
 const BASE_URL = 'https://api.themoviedb.org/3/'
 
@@ -43,12 +45,15 @@ async function onMovieClick(e) {
   
   const movieCard = e.target.closest('.movie');
   const movieId = movieCard.dataset.movieid;
-  const response = await getDetails(movieId)
+  response = await getDetails(movieId)
  
   renderModal()
   refs.filmDetails.insertAdjacentHTML('beforeend', modalMarkup(response)) 
   
-  onFilmBtnClick()
+  const watchedBtn = document.querySelector('.film-details__btn--watched')
+    watchedBtn.addEventListener('click', watchedStorage)
+  const queueBtn = document.querySelector('.film-details__btn--queue')
+   queueBtn.addEventListener('click', queueStorage)
 
   
   onBtnFilmTrailerClick()
@@ -59,20 +64,32 @@ async function onMovieClick(e) {
 
 
 function modalMarkup(res) {
+
+  const queuedMovies = localStorage.getItem('Queue');
+  const queuedMoviesArray = JSON.parse(queuedMovies) || [];
+  const MovieQueued = queuedMoviesArray.some(  
+    movie => movie  === res.id
+  )
+
+  const watchedMovies = localStorage.getItem('Watched');
+  const watchedMoviesArray = JSON.parse(watchedMovies) || [];
+  const MovieWatched = watchedMoviesArray.some(
+    movie => movie  === res.id
+  )
+
   
   const background = `https://image.tmdb.org/t/p/original/${res.backdrop_path}`;
   refs.backdrop.style.backgroundImage = `url('${background}')`;
   refs.backdrop.style.backgroundSize = 'cover';
   refs.backdrop.style.backgroundPosition = '50% 50%';
   
-   const markup = 
-   `
+  const markup =
+    `
      
       <img
         class="film-details__image"
-        src="https://image.tmdb.org/t/p/w500${
-     res.poster_path
-   }"
+        src="https://image.tmdb.org/t/p/w500${res.poster_path
+    }"
         alt="${res.title}"
       />
      
@@ -101,7 +118,7 @@ function modalMarkup(res) {
           <li class="film-details__item">
             <p class="film-details__text">Genre</p>
             <span class="film-details__span">${res.genres
-                .map(genre => genre.name).slice(0, 2).join(', ')}</span>
+      .map(genre => genre.name).slice(0, 2).join(', ')}</span>
           </li>
         </ul>
         <p class="film-details__about">About</p>
@@ -111,10 +128,10 @@ function modalMarkup(res) {
        
         <ul class="film-details__btn-list">
           <li class="film-details__btn-item">
-            <button type="button" class="film-details__btn film-details__btn--watched">add to Watched</button>
+            <button type="button" class="film-details__btn film-details__btn--watched " >${MovieWatched ?'remove from watched':'add to Watched'   }</button>
           </li>
           <li class="film-details__btn-item">
-            <button type="button" class="film-details__btn film-details__btn--queue">add to queue</button>
+            <button type="button" class="film-details__btn film-details__btn--queue " >${MovieQueued ? 'remove from queue' : 'add to Queue'  }</button>
           </li>
         </ul>
       </div>
@@ -177,50 +194,68 @@ function renderModal() {
 }
 
 ////////localStorage////////
+const btnWatchedAdd = 'Add To Watched';
+const btnWatchedRemove = 'Remove From Watched';
 
-const WATCHED_LOCALSTORAGE_KEY = 'Watched'
-const QUEUE_LOCALSTORAGE_KEY = 'Queue'
-let watched = []
-let queue = []
+const btnQueueAdd = 'Add To Queue';
+const btnQueueRemove = 'Remove From Queue';
 
-function getFilmId(e) {
+
+
+function watchedStorage(e) {
+  const watchedBtn = e.target;
   
- const filmDetailsWrapper = e.target.closest('.film-details__wrapper')
-  const filmDetailsId = filmDetailsWrapper.dataset.movieid
-  
-  if (e.target.classList.value === 'film-details__btn film-details__btn--watched') {
-    watchedLocalStorage(filmDetailsId)
-    e.target.textContent = 'movie added to watched'
-  }
+   
+  const watchedStorageItem = localStorage.getItem('Watched');
+  const watchedArray = JSON.parse(watchedStorageItem) || [];
 
-  if (e.target.classList.value === 'film-details__btn film-details__btn--queue') {
-    queueLocalStorage(filmDetailsId)
-    e.target.textContent = 'movie added to queue'
+  const watchedId = watchedArray.indexOf(response.id)
+   if (watchedId !== -1) {
+    
+     
+    watchedArray.splice(watchedId, 1)
+    watchedBtn.innerText = btnWatchedAdd
+  } else {
+   
+    watchedArray.push(response.id);
+    
+    watchedBtn.innerText = btnWatchedRemove;
   }
+  localStorage.setItem('Watched', JSON.stringify(watchedArray));
+  
   
 }
 
-function watchedLocalStorage(id) { 
+
+function queueStorage(e) {
+  const queueBtn = e.target;
   
-  watched.push(id)
-    localStorage.setItem(WATCHED_LOCALSTORAGE_KEY, JSON.stringify(watched))
 
-}
+  const queuedStorageItem = localStorage.getItem('Queue');
+  const queueArray = JSON.parse(queuedStorageItem) || [];
 
 
-function queueLocalStorage(id) {
- 
-  queue.push(id)
-    localStorage.setItem(QUEUE_LOCALSTORAGE_KEY, JSON.stringify(queue))
+   const watchedId = queueArray.indexOf(response.id)
+   if (watchedId !== -1) {
+    
+     
+    queueArray.splice(watchedId, 1)
+    queueBtn.innerText = btnQueueAdd
+  } else {
+
+    
+   
+    queueArray.push(response.id);
+    
+    queueBtn.innerText = btnQueueRemove;
+  }
+  localStorage.setItem('Queue', JSON.stringify(queueArray));
+  
+  
 }
 
    
-function onFilmBtnClick() {
-  const watchedBtn = document.querySelector('.film-details__btn--watched')
-  const queueBtn = document.querySelector('.film-details__btn--queue')
-   queueBtn.addEventListener('click', getFilmId) || watchedBtn.addEventListener('click', getFilmId)
-   
-}
+
 ////////MovieTrailer/////////
 
 async function getMovieVideo(id) {
@@ -265,3 +300,5 @@ function onBtnFilmTrailerClick() {
   
   
 }
+
+
