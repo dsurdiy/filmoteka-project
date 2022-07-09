@@ -26,7 +26,8 @@
         padding-bottom: 59px; 
         display: grid;
         max-width: 1279px;
-        grid-template-columns: repeat(auto-fit, minmax(336px, 1fr));
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto;
         gap: 32px 32px;
         justify-content: center;
         margin-left: auto;
@@ -48,7 +49,8 @@
         padding-top: 60px; 
         padding-bottom: 60px; 
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(336px, 1fr));
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-rows: auto;
         gap: 32px 16px;
         justify-content: start;
         margin-left: auto;
