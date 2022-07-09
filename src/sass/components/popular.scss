@@ -100,5 +100,17 @@
     height: 18px;
     width: 1px;
     background-color: #FF6B08;
+    margin-left: 4px;
+
+}
+
+.pagination__list {
+
+    display: flex;
+    justify-content: center;
+
+}
+
+.number {
     margin-left: 5px;
 }
