@@ -1,5 +1,7 @@
 // import axios from 'axios'
 
+import cardTpl from '../template/film-card.hbs'
+
 const API_KEY = 'api_key=1cf50e6248dc270629e802686245c2c8';
 const BASE_URL = 'https://api.themoviedb.org/3';
 const API_URL = BASE_URL + '/trending/movie/day?'+API_KEY;
@@ -96,6 +98,7 @@ async function getMovies(url) {
         const response = await fetch(url);
         const toJson = await response.json();
        console.log(toJson.total_pages);
+       console.log(toJson);
         showMovies(toJson.results);
       }
     
@@ -104,29 +107,46 @@ async function getMovies(url) {
     }
 }
 
-function showMovies(data) {
+export function showMovies(data) {
 
-    const markup = data.map(({title, poster_path, release_date, genre_ids, id}) => {
-       let movieGenre;
+
+  // const markup1 = cardTpl(data);
+
+  const markup = data.map(el => {
+
+    const {title, poster_path, release_date, genre_ids, id} = el;
+    let movieGenre;
 
         movieGenre = genres.filter(el => el.id === genre_ids[0] || el.id === genre_ids[1] || el.id === genre_ids[2])
         .map(el => el.name).join(', ');
 
         let dateToYear = new Date(release_date);
         const year = dateToYear.getFullYear();
+   return cardTpl({title, poster_path, release_date, genre_ids, id, movieGenre, year});
+  }).join("");
 
-        return `<div class="movie">
-            <a class="popular__link" href="${poster_path}"><img class="popular__image" src="${poster_path? IMG_URL+poster_path: "http://via.placeholder.com/1080x1580" }" alt="${title}"></a>
-                <div class="movie-info">
-                    <h3>${title.toUpperCase()}</h3>
-                    <div class="movie__description"> 
-                        <div class="movie__genre">${movieGenre}</div>
-                        <div class="movie__release_date">${year}</div>
+    // const markup = data.map(({title, poster_path, release_date, genre_ids, id}) => {
+    //    let movieGenre;
+
+    //     movieGenre = genres.filter(el => el.id === genre_ids[0] || el.id === genre_ids[1] || el.id === genre_ids[2])
+    //     .map(el => el.name).join(', ');
+
+    //     let dateToYear = new Date(release_date);
+    //     const year = dateToYear.getFullYear();
+
+    //     return `<div class="movie" data-movieid=${id}>
+    //         <img class="popular__image" src="${poster_path? IMG_URL+poster_path: "http://via.placeholder.com/1080x1580" }" alt="${title}">
+    //             <div class="movie-info">
+    //                 <h3>${title.toUpperCase()}</h3>
+    //                 <div class="movie__description"> 
+    //                     <div class="movie__genre">${movieGenre}</div>
+    //                     <div class="movie__release_date">${year}</div>
                 
-                    </div>
-                </div>
-        </div>`
-    }).join("");
+    //                 </div>
+    //             </div>
+    //     </div>`
+    // }).join("");
+    
     main.insertAdjacentHTML('beforeend', markup);
 }
 
