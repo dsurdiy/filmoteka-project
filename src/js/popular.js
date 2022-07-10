@@ -110,8 +110,6 @@ async function getMovies(url) {
 export function showMovies(data) {
 
 
-  // const markup1 = cardTpl(data);
-
   const markup = data.map(el => {
 
     const {title, poster_path, release_date, genre_ids, id} = el;
