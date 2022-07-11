@@ -110,9 +110,12 @@
 }
 
 .vote_average__inWQ{
+    display: flex;
+    align-items: center;
+    justify-content: center;
     font-weight: 500;
     font-size: 12px;
-    line-height: 1.16;
+    line-height: normal;
     padding: 1px 9px 1px 10px;
     width: 36px;
     height: 16px;
