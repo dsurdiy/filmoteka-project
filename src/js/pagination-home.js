@@ -5,6 +5,7 @@ const API_KEY = 'api_key=1cf50e6248dc270629e802686245c2c8';
 const BASE_URL = 'https://api.themoviedb.org/3';
 const API_URL = BASE_URL + '/trending/movie/day?' + API_KEY + '&genre';
 
+let page = 1;
 let previousPagesShow = false;
 
 if (screen.width > 767) {
@@ -25,7 +26,23 @@ $('#pagination-container').pagination({
   afterPageOnClick: function (event) {
     event.preventDefault();
     document.querySelector('.popular__mov').innerHTML = '';
-    const page = event.target.innerText;
+    page = event.target.innerText;
+    const url = API_URL + `&page=${page}`;
+    getMovies(url);
+  },
+  afterPreviousOnClick: function (event) {
+    event.preventDefault();
+    document.querySelector('.popular__mov').innerHTML = '';
+    if (page > 1) {
+      page = page - 1;
+      const url = API_URL + `&page=${page}`;
+      getMovies(url);
+    }
+  },
+  afterNextOnClick: function (event) {
+    event.preventDefault();
+    document.querySelector('.popular__mov').innerHTML = '';
+    page = page + 1;
     const url = API_URL + `&page=${page}`;
     getMovies(url);
   },
