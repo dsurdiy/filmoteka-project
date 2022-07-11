@@ -13,11 +13,10 @@ watchedBtn.addEventListener('click', makePagination);
 queueBtn.addEventListener('click', makePagination);
 
 function makePagination(event) {
-  console.log(event.target.dataset.action);
+  document.querySelector('#pagination-container').innerHTML = '';
   const action = event.target.dataset.action;
   const check = JSON.parse(localStorage.getItem(action.charAt(0).toUpperCase() + action.slice(1)));
-  console.log(check);
-  if (check) {
+  if (check && check.length > 0) {
     $('#pagination-container').pagination({
       dataSource: check,
       pageSize: 20,
