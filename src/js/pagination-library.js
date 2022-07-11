@@ -4,6 +4,12 @@ const API_KEY = 'api_key=1cf50e6248dc270629e802686245c2c8';
 const BASE_URL = 'https://api.themoviedb.org/3';
 const API_URL = BASE_URL + '/trending/movie/day?' + API_KEY + '&genre';
 
+let previousPagesShow = false;
+
+if (screen.width > 767) {
+  previousPagesShow = true;
+}
+
 $('#pagination-container').pagination({
   dataSource: JSON.parse(localStorage.getItem('Watched')),
   afterPageOnClick: function (event) {
@@ -15,6 +21,8 @@ $('#pagination-container').pagination({
   prevText: '',
   nextText: '',
   ellipsisText: '&#8943',
+  showFirstOnEllipsisShow: previousPagesShow,
+  showLastOnEllipsisShow: previousPagesShow,
   callback: function (data, pagination) {
     // template method of yourself
 
