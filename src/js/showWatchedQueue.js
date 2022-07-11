@@ -1,51 +1,41 @@
 import axios from 'axios';
 import cardTemplate from '../template/film-cardWQ.hbs';
 
-
 const API_KEY = 'api_key=1b50ba0e0b99203af5e26bdcee6d2298';
 const IMG_URL = 'https://image.tmdb.org/t/p/w500';
-
-
 
 const watchedBtn = document.querySelector('button[data-action="watched"]');
 const queueBtn = document.querySelector('button[data-action="queue"]');
 const wqGallery = document.querySelector('.watched_and_queue');
 
-watchedBtn.addEventListener("click", watched);
-queueBtn.addEventListener("click", queue);
+watchedBtn.addEventListener('click', watched);
+queueBtn.addEventListener('click', queue);
 let watchedMoviesId = [];
 
 function watched() {
-  
   clearQueue();
-  watchedMoviesId = JSON.parse(localStorage.getItem("Watched"));
-    watchedMoviesId.map(id => {
-        getWQMovies(id)
-    })
-    
-} 
-
-function queue() {
-    clearWatched();
-    watchedMoviesId = JSON.parse(localStorage.getItem("Queue"));
-    watchedMoviesId.map(id => {
-        getWQMovies(id)
-    })
-    
+  watchedMoviesId = JSON.parse(localStorage.getItem('Watched'));
+  watchedMoviesId.map(id => {
+    getWQMovies(id);
+  });
 }
 
+function queue() {
+  clearWatched();
+  watchedMoviesId = JSON.parse(localStorage.getItem('Queue'));
+  watchedMoviesId.map(id => {
+    getWQMovies(id);
+  });
+}
 
 async function getWQMovies(id) {
-
   try {
-    return await axios.get(`https://api.themoviedb.org/3/movie/${id}?${API_KEY}`)
-    .then( response => {
-      showWatchedMovies(response.data)
-    })
-    
+    return await axios.get(`https://api.themoviedb.org/3/movie/${id}?${API_KEY}`).then(response => {
+      showWatchedMovies(response.data);
+    });
   } catch (error) {
     console.log(error);
-  } 
+  }
 }
 
  function showWatchedMovies(data) {
@@ -64,14 +54,12 @@ async function getWQMovies(id) {
    
    const markup = cardTemplate({ title, poster_path, year, movieGenre: genre, id,vote });
    wqGallery.insertAdjacentHTML("beforeend", markup);
-   
-      
 }
 
 function clearWatched() {
-    wqGallery.innerHTML = "";
+  wqGallery.innerHTML = '';
 }
 
 function clearQueue() {
-    wqGallery.innerHTML = "";
+  wqGallery.innerHTML = '';
 }

@@ -7,53 +7,74 @@ const API_URL = BASE_URL + '/trending/movie/day?' + API_KEY + '&genre';
 
 let page = 1;
 let previousPagesShow = false;
+let get_url = API_URL;
 
 if (screen.width > 767) {
   previousPagesShow = true;
 }
 
-$('#pagination-container').pagination({
-  dataSource: function (done) {
-    $.ajax({
-      type: 'GET',
-      url: API_URL,
-      success: function (response) {
-        const arr = new Array(response.total_results);
-        done(arr);
-      },
-    });
-  },
-  afterPageOnClick: function (event) {
-    event.preventDefault();
-    document.querySelector('.popular__mov').innerHTML = '';
-    page = parseInt(event.target.innerText);
-    const url = API_URL + `&page=${page}`;
-    getMovies(url);
-  },
-  afterPreviousOnClick: function (event) {
-    event.preventDefault();
-    document.querySelector('.popular__mov').innerHTML = '';
-    page -= 1;
-    const url = API_URL + `&page=${page}`;
-    getMovies(url);
-  },
-  afterNextOnClick: function (event) {
-    event.preventDefault();
-    document.querySelector('.popular__mov').innerHTML = '';
-    page += 1;
-    const url = API_URL + `&page=${page}`;
-    getMovies(url);
-  },
-  pageSize: 20,
-  prevText: '',
-  nextText: '',
-  ellipsisText: '&#8943',
-  showFirstOnEllipsisShow: previousPagesShow,
-  showLastOnEllipsisShow: previousPagesShow,
-  callback: function (data, pagination) {
-    // template method of yourself
+document.querySelector('.js-search-form').addEventListener('submit', onSearch);
 
-    var html = data;
-    $('#data-container').html(html);
-  },
-});
+function onSearch(e) {
+  e.preventDefault();
+
+  const query = e.currentTarget.elements.searchQuery.value;
+
+  if (query === '') {
+    return;
+  }
+
+  page = 1;
+  get_url = `${BASE_URL}/search/movie?${API_KEY}&language=en-US&include_adult=false&query=${query}`;
+
+  makePagination();
+}
+makePagination();
+function makePagination() {
+  $('#pagination-container').pagination({
+    dataSource: function getPagination(done) {
+      $.ajax({
+        type: 'GET',
+        url: get_url,
+        success: function (response) {
+          console.log(response);
+          const arr = new Array(response.total_results);
+          done(arr);
+        },
+      });
+    },
+    afterPageOnClick: function (event) {
+      event.preventDefault();
+      document.querySelector('.popular__mov').innerHTML = '';
+      page = parseInt(event.target.innerText);
+      const url = get_url + `&page=${page}`;
+      getMovies(url);
+    },
+    afterPreviousOnClick: function (event) {
+      event.preventDefault();
+      document.querySelector('.popular__mov').innerHTML = '';
+      page -= 1;
+      const url = get_url + `&page=${page}`;
+      getMovies(url);
+    },
+    afterNextOnClick: function (event) {
+      event.preventDefault();
+      document.querySelector('.popular__mov').innerHTML = '';
+      page += 1;
+      const url = get_url + `&page=${page}`;
+      getMovies(url);
+    },
+    pageSize: 20,
+    prevText: '',
+    nextText: '',
+    ellipsisText: '&#8943',
+    showFirstOnEllipsisShow: previousPagesShow,
+    showLastOnEllipsisShow: previousPagesShow,
+    callback: function (data, pagination) {
+      // template method of yourself
+
+      var html = data;
+      $('#data-container').html(html);
+    },
+  });
+}
