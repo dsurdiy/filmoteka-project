@@ -26,7 +26,7 @@
     transition-duration: .55s;
     transition-timing-function: cubic-bezier(.4,0,.2,1);
 
-    @media screen and (max-width: 767px){
+    @media screen and (min-width: 320px) and (max-width: 767px){
         background-size: 400px 300px;
         width: 350px;
         height: 450px;
