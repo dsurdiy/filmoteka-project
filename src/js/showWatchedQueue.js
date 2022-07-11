@@ -38,29 +38,22 @@ async function getWQMovies(id) {
   }
 }
 
-function showWatchedMovies(data) {
-  const { title, poster_path, release_date, genres, id, vote_average } = data;
-  if (genres.length > 3) {
-    genres.length = 3;
-  }
-  let genre = genres.reverse().map(genre => {
-    return genre.name;
-  });
-
-  let dateToYear = new Date(release_date);
-  const year = dateToYear.getFullYear();
-  //  const markup = `<div class="movie" data-movieid=${id}>
-  //         <img class="popular__image" src="${poster_path ? IMG_URL + poster_path : "http://via.placeholder.com/1080x1580"}" alt="${original_title}">
-  //             <div class="movie-info">
-  //                 <h3>${original_title}</h3>
-  //                 <div class="movie__description">
-  //                     <div class="movie__genre">${genre}</div>
-  //                     <div class="movie__release_date">${release_date}</div>
-  //                 </div>
-  //             </div>
-  //     </div>`
-  const markup = cardTemplate({ title, poster_path, year, movieGenre: genre, id, vote_average });
-  wqGallery.insertAdjacentHTML('beforeend', markup);
+ function showWatchedMovies(data) {
+   const { title, poster_path, release_date, genres, id, vote_average } = data
+   if (genres.length > 3) {
+      genres.length = 3;
+   }
+   let genre = genres.reverse().map(genre => {
+       return  " "+genre.name;
+   })
+   
+   let dateToYear = new Date(release_date);
+   const year = dateToYear.getFullYear();
+   
+   let vote = vote_average.toFixed(1);
+   
+   const markup = cardTemplate({ title, poster_path, year, movieGenre: genre, id,vote });
+   wqGallery.insertAdjacentHTML("beforeend", markup);
 }
 
 function clearWatched() {
