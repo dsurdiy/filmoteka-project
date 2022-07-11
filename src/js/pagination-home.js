@@ -37,7 +37,6 @@ function makePagination() {
         type: 'GET',
         url: get_url,
         success: function (response) {
-          console.log(response);
           const arr = new Array(response.total_results);
           done(arr);
         },
