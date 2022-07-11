@@ -1,5 +1,5 @@
 import axios from 'axios';
-import cardTemplate from '../template/film-card.hbs';
+import cardTemplate from '../template/film-cardWQ.hbs';
 
 
 const API_KEY = 'api_key=1b50ba0e0b99203af5e26bdcee6d2298';
@@ -9,7 +9,7 @@ const IMG_URL = 'https://image.tmdb.org/t/p/w500';
 
 const watchedBtn = document.querySelector('button[data-action="watched"]');
 const queueBtn = document.querySelector('button[data-action="queue"]');
-const wqGallery = document.querySelector('.watched_and_queue')
+const wqGallery = document.querySelector('.watched_and_queue');
 
 watchedBtn.addEventListener("click", watched);
 queueBtn.addEventListener("click", queue);
@@ -49,8 +49,16 @@ async function getWQMovies(id) {
 }
 
  function showWatchedMovies(data) {
-     const { title, poster_path, release_date:year, genres, id } = data
-        let genre = genres.map(genre =>{return genre.name})
+   const { title, poster_path, release_date, genres, id, vote_average } = data
+   if (genres.length > 3) {
+      genres.length = 3;
+   }
+   let genre = genres.reverse().map(genre => {
+       return  genre.name
+   })
+   
+   let dateToYear = new Date(release_date);
+    const year = dateToYear.getFullYear();
     //  const markup = `<div class="movie" data-movieid=${id}>
     //         <img class="popular__image" src="${poster_path ? IMG_URL + poster_path : "http://via.placeholder.com/1080x1580"}" alt="${original_title}">
     //             <div class="movie-info">
@@ -61,8 +69,9 @@ async function getWQMovies(id) {
     //                 </div>
     //             </div>
     //     </div>`
-    const markup = cardTemplate ({title, poster_path, year,movieGenre:genre, id})
-     wqGallery.insertAdjacentHTML("beforeend", markup)
+   const markup = cardTemplate({ title, poster_path, year, movieGenre: genre, id,vote_average });
+   wqGallery.insertAdjacentHTML("beforeend", markup);
+   
       
 }
 
