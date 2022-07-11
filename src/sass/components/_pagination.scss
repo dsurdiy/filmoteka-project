@@ -10,13 +10,6 @@
     box-sizing: initial;
 }
 
-.paginationjs-prev {
-background-image: url("data:image/svg+xml,%3Csvg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M12.6667 8H3.33334' stroke='black' stroke-width='1.33333' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M8.00001 12.6667L3.33334 8.00004L8.00001 3.33337' stroke='black' stroke-width='1.33333' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E%0A");
-background-repeat: no-repeat;
-background-position: center;
-background-color: #F7F7F7;
-}
-
 .paginationjs:after {
     display: table;
     content: " ";
@@ -57,7 +50,25 @@ background-color: #F7F7F7;
     border-radius: 5px;
     border-right: none;
     list-style: none;
-    margin: 5px;
+    margin: 0px 8px;
+
+    &:first-child{
+        @media screen and (max-width: 767px) {
+            margin-left: 0px;
+            margin-right: 12px;
+        }
+            margin-left: 0px;
+            margin-right: 8px;
+    }
+
+    &:last-child {
+        @media screen and (max-width: 767px) {
+                margin-left: 12px;
+                margin-right: 0px;
+            }
+                margin-left: 8px;
+                margin-right: 0px;
+    }
 }
 
 .paginationjs .paginationjs-pages li>a {
@@ -65,7 +76,6 @@ background-color: #F7F7F7;
     align-items: center;
     justify-content: center;
     border-radius: 5px;
-    min-width: 40px;
     height: 40px;
     line-height: 1.33;
     font-size: 12px;
@@ -74,6 +84,7 @@ background-color: #F7F7F7;
 }
 
 .paginationjs .paginationjs-pages li>a:hover {
+    min-width: 40px;
     border-radius: 5px;
     background-color: #FF6B08;
     color: #FFFFFF;
@@ -88,6 +99,7 @@ background-color: #F7F7F7;
     }
 
 .paginationjs .paginationjs-pages li.active>a {
+    min-width: 40px;
     height: 40px;
     line-height: 1.33;
     background: #FF6B08;
@@ -394,6 +406,8 @@ border-radius: 5px;
 }
 
 .paginationjs .paginationjs-pages li.paginationjs-next a {
+    min-width: 40px;
+    height: 40px;
     border-radius: 5px;
     border-right: none;
     background-image: url("data:image/svg+xml,%3Csvg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M12.6667 8H3.33334' stroke='black' stroke-width='1.33333' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M8.00001 12.6667L3.33334 8.00004L8.00001 3.33337' stroke='black' stroke-width='1.33333' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E%0A");
@@ -420,4 +434,14 @@ border-radius: 5px;
 .paginationjs.paginationjs-big .paginationjs-go-input>input[type=text] {
     height: 36px\9;
     line-height: 36px\9
+}
+
+.paginationjs-prev,
+.J-paginationjs-previous {
+    min-width: 40px;
+    height: 40px;
+    background-image: url("data:image/svg+xml,%3Csvg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M12.6667 8H3.33334' stroke='black' stroke-width='1.33333' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M8.00001 12.6667L3.33334 8.00004L8.00001 3.33337' stroke='black' stroke-width='1.33333' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E%0A");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: #F7F7F7;
 }
