@@ -26,23 +26,21 @@ $('#pagination-container').pagination({
   afterPageOnClick: function (event) {
     event.preventDefault();
     document.querySelector('.popular__mov').innerHTML = '';
-    page = event.target.innerText;
+    page = parseInt(event.target.innerText);
     const url = API_URL + `&page=${page}`;
     getMovies(url);
   },
   afterPreviousOnClick: function (event) {
     event.preventDefault();
     document.querySelector('.popular__mov').innerHTML = '';
-    if (page > 1) {
-      page = page - 1;
-      const url = API_URL + `&page=${page}`;
-      getMovies(url);
-    }
+    page -= 1;
+    const url = API_URL + `&page=${page}`;
+    getMovies(url);
   },
   afterNextOnClick: function (event) {
     event.preventDefault();
     document.querySelector('.popular__mov').innerHTML = '';
-    page = page + 1;
+    page += 1;
     const url = API_URL + `&page=${page}`;
     getMovies(url);
   },
