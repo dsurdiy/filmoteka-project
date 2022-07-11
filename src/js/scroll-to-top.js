@@ -1,10 +1,13 @@
-export {onScroll , onToTopBtn} 
+export { onScroll, onToTopBtn } 
+import _debounce from "lodash.debounce";
 
 const toTopBtn = document.querySelector('.btn-to-top');
 const modalWrapper = document.querySelector('.modal-wrapper.is-hidden')
-window.addEventListener('scroll', onScroll);
-toTopBtn.addEventListener('click', onToTopBtn);
-console.log(modalWrapper);
+window.addEventListener('scroll', _debounce(onScroll , 300));
+
+toTopBtn.addEventListener('click', onToTopBtn );
+
+
 function onScroll() {
   const scrolled = window.pageYOffset;
   const coords = document.documentElement.clientHeight;
