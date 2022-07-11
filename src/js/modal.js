@@ -1,8 +1,7 @@
 import axios from 'axios'
 
-
 const refs = {
-  cardsWrapper: document.querySelector('.popular__mov'),
+  
   modal: document.querySelector('.film-details'),
   closeBtn: document.querySelector('.modal__icon-close'),
   modalWrapper: document.querySelector('.modal-wrapper'),
@@ -10,17 +9,17 @@ const refs = {
   filmDetails: document.querySelector('.film-details'),
   iframe: document.querySelector('.trailer__trailer-iframe'),
   frameWrap: document.querySelector('.modal__frame-wrap'),
-  closeFrameBtn: document.querySelector('.trailer__frame-close')
-  
+  closeFrameBtn: document.querySelector('.trailer__frame-close'),
+  cardsWrapper: document.querySelector('.popular__mov'),
 }
+
+refs.cardsWrapper.addEventListener('click' , onMovieClick);
+
 let response = null
 const API_KEY = '1b50ba0e0b99203af5e26bdcee6d2298'
 const BASE_URL = 'https://api.themoviedb.org/3/'
 
-// ---------------------- Should be added OR for library -----------------------------------------
-if (refs.cardsWrapper) {refs.cardsWrapper.addEventListener('click', onMovieClick)}
-// -----------------------------------------------------------------------------------------------
-  
+
 async function getDetails(id) {
 
   try {
@@ -42,9 +41,9 @@ async function onMovieClick(e) {
     return 
   }
   
-  
-  const movieCard = e.target.closest('.movie');
-  const movieId = movieCard.dataset.movieid;
+  const movieCard = e.target.closest('.film-card');
+  const movieId = movieCard.dataset.id;
+
   response = await getDetails(movieId)
  
   renderModal()
@@ -93,7 +92,7 @@ function modalMarkup(res) {
         alt="${res.title}"
       />
      
-      <div class="film-details__wrapper" data-movieid=${res.id}>
+      <div class="film-details__wrapper" data-id=${res.id}>
         <button class="film-trailer__btn film-details__btn">Watch Trailer</button>
         <h2 class="film-details__title">${res.title}</h2>
         <ul class="film-details__list ">
@@ -274,7 +273,7 @@ async function getMovieVideo(id) {
 function movieTrailer(e) {
 
   const filmDetailsWrapper = e.target.closest('.film-details__wrapper')
-  const filmTrailerId = filmDetailsWrapper.dataset.movieid
+  const filmTrailerId = filmDetailsWrapper.dataset.id
   getMovieVideo(filmTrailerId)
  toggleModal()
   refs.frameWrap.classList.remove('is-hidden-frame');
