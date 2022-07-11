@@ -1,32 +1,37 @@
 import * as paginationjs from 'paginationjs';
 
-const API_KEY = 'api_key=1cf50e6248dc270629e802686245c2c8';
-const BASE_URL = 'https://api.themoviedb.org/3';
-const API_URL = BASE_URL + '/trending/movie/day?' + API_KEY + '&genre';
-
 let previousPagesShow = false;
 
 if (screen.width > 767) {
   previousPagesShow = true;
 }
 
-$('#pagination-container').pagination({
-  dataSource: JSON.parse(localStorage.getItem('Watched')),
-  afterPageOnClick: function (event) {
-    event.preventDefault();
-    document.querySelector('.watched_and_queue').innerHTML = '';
-    const page = event.target.innerText;
-  },
-  pageSize: 20,
-  prevText: '',
-  nextText: '',
-  ellipsisText: '&#8943',
-  showFirstOnEllipsisShow: previousPagesShow,
-  showLastOnEllipsisShow: previousPagesShow,
-  callback: function (data, pagination) {
-    // template method of yourself
+const watchedBtn = document.querySelector('button[data-action="watched"]');
+const queueBtn = document.querySelector('button[data-action="queue"]');
 
-    var html = data;
-    $('#data-container').html(html);
-  },
-});
+watchedBtn.addEventListener('click', makePagination);
+queueBtn.addEventListener('click', makePagination);
+
+function makePagination(event) {
+  console.log(event.target.dataset.action);
+  const action = event.target.dataset.action;
+  const check = JSON.parse(localStorage.getItem(action.charAt(0).toUpperCase() + action.slice(1)));
+  console.log(check);
+  if (check) {
+    $('#pagination-container').pagination({
+      dataSource: check,
+      pageSize: 20,
+      prevText: '',
+      nextText: '',
+      ellipsisText: '&#8943',
+      showFirstOnEllipsisShow: previousPagesShow,
+      showLastOnEllipsisShow: previousPagesShow,
+      callback: function (data, pagination) {
+        // template method of yourself
+
+        var html = data;
+        $('#data-container').html(html);
+      },
+    });
+  }
+}
