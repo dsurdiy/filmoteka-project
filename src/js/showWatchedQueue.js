@@ -1,4 +1,5 @@
-import axios from 'axios'
+import axios from 'axios';
+import cardTemplate from '../template/film-card.hbs';
 
 
 const API_KEY = 'api_key=1b50ba0e0b99203af5e26bdcee6d2298';
@@ -48,19 +49,19 @@ async function getWQMovies(id) {
 }
 
  function showWatchedMovies(data) {
-     const { original_title, poster_path, release_date, genres, id } = data
+     const { title, poster_path, release_date:year, genres, id } = data
         let genre = genres.map(genre =>{return genre.name})
-     const markup = `<div class="movie" data-movieid=${id}>
-            <img class="popular__image" src="${poster_path ? IMG_URL + poster_path : "http://via.placeholder.com/1080x1580"}" alt="${original_title}">
-                <div class="movie-info">
-                    <h3>${original_title}</h3>
-                    <div class="movie__description"> 
-                        <div class="movie__genre">${genre}</div>
-                        <div class="movie__release_date">${release_date}</div>
-                    </div>
-                </div>
-        </div>`
-    
+    //  const markup = `<div class="movie" data-movieid=${id}>
+    //         <img class="popular__image" src="${poster_path ? IMG_URL + poster_path : "http://via.placeholder.com/1080x1580"}" alt="${original_title}">
+    //             <div class="movie-info">
+    //                 <h3>${original_title}</h3>
+    //                 <div class="movie__description"> 
+    //                     <div class="movie__genre">${genre}</div>
+    //                     <div class="movie__release_date">${release_date}</div>
+    //                 </div>
+    //             </div>
+    //     </div>`
+    const markup = cardTemplate ({title, poster_path, year,movieGenre:genre, id})
      wqGallery.insertAdjacentHTML("beforeend", markup)
       
 }
