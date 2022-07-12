@@ -30,7 +30,23 @@
     line-height: 1.18;
     }
 }
+
+.first {
+    @media screen and (max-width: 767px){
+    margin-bottom: -10px;
+    }
+}
 .footer__icon{
     margin-left: 10px;
     margin-right: 10px;
 }
+.footer__link {     
+    display: inline-block;     
+    position: relative;    
+    z-index: 1;     
+    padding: 2em;     
+    margin: -2em; 
+}
+
+
+
