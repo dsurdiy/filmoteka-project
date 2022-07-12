@@ -6,7 +6,8 @@
   "homepage": "https://pahomeathome.github.io/filmoteka-old",
   "scripts": {
     "dev": "parcel src/*.html --open",
-    "build": "parcel build src/*.html --public-url /filmoteka-old/"
+    "build": "parcel build src/*.html --public-url /filmoteka-old/",
+    "firestart": "firebase emulators:start --only auth"
   },
   "repository": {
     "type": "git",
