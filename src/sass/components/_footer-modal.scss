@@ -7,31 +7,40 @@
     display: none;
 }
 .footer__modal{
+    display: block;
     position: absolute;
     top: 50%;
     left: 50%;
-    width: 450px;
-    height: 400px;
+    width: 200px;
+    height: 300px;
     transform: translate(-50%, -50%);
     background-color: #fff;
     border-radius: 10px;
     padding: 24px;
+     z-index: -1;
 
     background-image: url(../images/grouplogo.svg);
     background-repeat: no-repeat;
-    background-size: 400px 300px;
+    background-size: 200px 150px;
     background-position: center;
     
         
     transition-duration: .55s;
     transition-timing-function: cubic-bezier(.4,0,.2,1);
 
-    @media screen and (min-width: 320px) and (max-width: 767px){
+    @media screen and (min-width: 320px){
+        background-size: 300px 250px;
+        width: 348px;
+        height: 400px;
+       
+    }
+    @media screen and (min-width: 768px){
         background-size: 400px 300px;
-        width: 350px;
-        height: 450px;
+       width: 440px;
+       height: 400px;
     }
 }
+
 .open{
     display: block;
 }
@@ -55,6 +64,24 @@
     line-height: 1.33;
     color: #FF6B08;
     text-transform: uppercase;
+}
+
+@keyframes pulsate{50%{color:#fff;text-shadow:0 -1px rgba(0,0,0,.3),0 0 5px #f03000,0 0 8px #f80000;}
+}
+
+.link-qr{
+    display: flex;
+    margin: 5px 0 0 10px;
+    color: rgb(245,245,245);
+    text-shadow: 0 -1px rgba(0,0,0,.1);
+    font-size: 32px;
+    font-weight: 600;
+    text-decoration: none;
+    animation: pulsate 1.2s linear infinite;
+     @media screen and (max-width: 768px){
+        font-size: 26px;
+    line-height: 1.17;
+    }
 }
 
 

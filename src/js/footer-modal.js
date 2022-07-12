@@ -15,6 +15,7 @@ const modalContent = `<div class="member">
 </li>
 <li class="member__name">In progress...</li>
 </ul>
+<a href="https://github.com/PaHomeAtHome/filmoteka-old/graphs/contributors" target="_blank"><span class="footer__text link-qr">Press me, plz...</span></a>
 </div>
 <button type="button" class="modal__close-btn" data-close-modal><span>&#9587;</span></button>
 `;
@@ -36,7 +37,6 @@ const toggleModal = () => {
 
 refs.openModal.addEventListener("click", toggleModal);
 refs.closeModalBtn.addEventListener("click", toggleModal);
-
 
 
 
