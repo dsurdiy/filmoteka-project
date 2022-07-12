@@ -5,5 +5,6 @@ import * as loader from './js/loader';
 import * as search from './js/search-movie';
 import * as pagination from './js/pagination-home';
 import { onScroll, onToTopBtn } from './js/scroll-to-top';
-onScroll()
-onToTopBtn()
+onScroll();
+onToTopBtn();
+import * as firebase from './js/firebase';
