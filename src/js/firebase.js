@@ -125,6 +125,6 @@ btnSignup.addEventListener('click', createAccount);
 btnLogout.addEventListener('click', logout);
 
 const auth = getAuth(firebaseApp);
-connectAuthEmulator(auth, 'https://pahomeathome.github.io/filmoteka-old/:9099');
+connectAuthEmulator(auth, 'https://pahomeathome.github.io/filmoteka-old');
 
 monitorAuthState();
