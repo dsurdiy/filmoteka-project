@@ -17,8 +17,7 @@ let watchedMoviesId = [];
 function watched() {
   clearQueue();
   watchedMoviesId = JSON.parse(localStorage.getItem('Watched'));
-
-  if (watchedMoviesId === null) {
+  if (watchedMoviesId === 0 || watchedMoviesId < 1) {
    return alertMessage();
   }
   
@@ -31,7 +30,7 @@ function queue() {
   clearWatched();
   watchedMoviesId = JSON.parse(localStorage.getItem('Queue'));
 
-  if (watchedMoviesId === null) {
+  if (watchedMoviesId === 0 || watchedMoviesId < 1) {
    return alertMessage();
   }
 
