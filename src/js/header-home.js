@@ -9,7 +9,7 @@ function onSearchFormSubmit(e) {
   e.preventDefault();
 
   const form = e.currentTarget;
-  const searchQuery = form.search.value;
+  const searchQuery = form.searchQuery.value;
   hideSearchWarning();
 
   if (searchQuery === '') {
@@ -17,7 +17,7 @@ function onSearchFormSubmit(e) {
     return;
   }
 
-  form.reset();
+  // form.reset();
 }
 
 function showSearchWarning() {

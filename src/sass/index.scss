@@ -1,9 +1,10 @@
-@import './common';
 @import './utils/normalize';
 @import './utils/container';
+@import './components/loader';
 @import './components/header-home';
 @import './components/header-library.scss';
 @import './components/card';
 @import './components/modal';
 @import './components/footer';
-@import './components/popular';
+@import './components/pagination';
+@import './components/scroll-to-top'

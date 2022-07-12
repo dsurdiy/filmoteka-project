@@ -1,0 +1,24 @@
+
+
+<li class="film-card" data-id="{{id}}">
+    {{#if poster_path}}
+    <picture class="poster">
+        <source srcset="https://image.tmdb.org/t/p/original{{poster_path}} 1x, https://image.tmdb.org/t/p/original{{poster_path}} 2x"
+            media="(min-width: 1024px)">
+        <source srcset="https://image.tmdb.org/t/p/w780{{poster_path}} 1x, https://image.tmdb.org/t/p/w780{{poster_path}} 2x"
+            media="(min-width: 768px)">
+        <source srcset="https://image.tmdb.org/t/p/w342{{poster_path}} 1x, https://image.tmdb.org/t/p/w342{{poster_path}} 2x"
+            media="(min-width: 320px)">
+        
+        <img data-id="{{id}}" src="https://image.tmdb.org/t/p/w342{{poster_path}}" alt="{{title}}" loading="lazy" class="poster"/>
+    </picture>
+    {{else}}
+        <img data-id="{{id}}"  src="https://cdn.pixabay.com/photo/2014/03/25/16/27/movie-297135_960_720.png" alt="{{title}}" loading="lazy" class="poster" style="object-fit: contain;"/>
+    {{/if}}
+    <h2 data-id="{{id}}" class="film-card__title">{{title}}</h2>
+        <div class="info">
+            <p data-id="{{id}}" class="film-card__info">
+                {{movieGenre}} | {{year}}
+            </p>  
+        </div>
+</li>
