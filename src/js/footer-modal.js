@@ -21,6 +21,7 @@ const modalContent = `<div class="member">
 `;
 
 overlay.classList.add("overlay");
+overlay.classList.add("container");
 modal.classList.add("footer__modal");
 
 overlay.appendChild(modal);
