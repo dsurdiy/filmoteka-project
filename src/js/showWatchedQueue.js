@@ -1,5 +1,7 @@
 import axios from 'axios';
+import alertMessage from './alert'
 import cardTemplate from '../template/film-cardWQ.hbs';
+
 
 const API_KEY = 'api_key=1b50ba0e0b99203af5e26bdcee6d2298';
 const IMG_URL = 'https://image.tmdb.org/t/p/w500';
@@ -15,6 +17,11 @@ let watchedMoviesId = [];
 function watched() {
   clearQueue();
   watchedMoviesId = JSON.parse(localStorage.getItem('Watched'));
+
+  if (watchedMoviesId === null) {
+   return alertMessage();
+  }
+  
   watchedMoviesId.map(id => {
     getWQMovies(id);
   });
@@ -23,6 +30,11 @@ function watched() {
 function queue() {
   clearWatched();
   watchedMoviesId = JSON.parse(localStorage.getItem('Queue'));
+
+  if (watchedMoviesId === null) {
+   return alertMessage();
+  }
+
   watchedMoviesId.map(id => {
     getWQMovies(id);
   });
