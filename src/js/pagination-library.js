@@ -16,12 +16,17 @@ const queueBtn = document.querySelector('button[data-action="queue"]');
 watchedBtn.addEventListener('click', makePagination);
 queueBtn.addEventListener('click', makePagination);
 
+watchedBtn.click();
 function makePagination(event) {
   page = 1;
   document.querySelector('#pagination-container').innerHTML = '';
   const action = event.target.dataset.action;
   const check = JSON.parse(localStorage.getItem(action.charAt(0).toUpperCase() + action.slice(1)));
   if (check && check.length > 0) {
+    if (check.length <= 20) {
+      $('#pagination-container').pagination('hide');
+      return;
+    }
     $('#pagination-container').pagination({
       dataSource: check,
       afterPageOnClick: function (event) {

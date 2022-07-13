@@ -15,8 +15,7 @@ let watchedMoviesId = [];
 
 import { page } from './pagination-library';
 
-watched('click');
-watchedBtn.classList.add('library-btn--current');
+watchedBtn.click();
 
 export function watched(event) {
   clearQueue();

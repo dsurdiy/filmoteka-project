@@ -1,5 +1,6 @@
 import * as paginationjs from 'paginationjs';
 import { getMovies, showMovies } from './popular';
+import { notiflixLoading, notiflixLoadingRemove } from './spinner';
 
 const API_KEY = 'api_key=1cf50e6248dc270629e802686245c2c8';
 const BASE_URL = 'https://api.themoviedb.org/3';
@@ -17,6 +18,7 @@ document.querySelector('.js-search-form').addEventListener('submit', onSearch);
 
 function onSearch(e) {
   e.preventDefault();
+  notiflixLoading();
 
   const query = e.currentTarget.elements.searchQuery.value;
 
@@ -28,8 +30,9 @@ function onSearch(e) {
   page = 1;
   get_url = `${BASE_URL}/search/movie?${API_KEY}&language=en-US&include_adult=false&query=${query}`;
 
-  const isSearch = true;
   makePagination();
+
+  notiflixLoadingRemove();
 }
 makePagination();
 function makePagination() {
