@@ -40,7 +40,7 @@ export const showLoginError = error => {
 
 export const showLoginState = user => {
   lblAuthState.innerHTML = `You're logged in as ${
-    user.displayName || 'User without nickname'
+    user.displayName || 'Guest'
   } (uid: ${user.uid}, email: ${user.email}) `;
 };
 
