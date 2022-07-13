@@ -87,17 +87,18 @@ const genres = [
   },
 ];
 
-document.addEventListener('DOMContentLoaded', popularOnPageLoad);
+// document.addEventListener('DOMContentLoaded', popularOnPageLoad);
 
-function popularOnPageLoad() {
-  getMovies(API_URL);
-}
+// function popularOnPageLoad() {
+//   getMovies(API_URL);
+// }
 
 export async function getMovies(url) {
   try {
     const response = await fetch(url);
     const toJson = await response.json();
     showMovies(toJson.results);
+    return toJson.total_results;
   } catch (error) {
     console.log(error);
   }

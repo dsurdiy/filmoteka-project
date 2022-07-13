@@ -1,5 +1,5 @@
 import * as paginationjs from 'paginationjs';
-import { getMovies } from './popular';
+import { getMovies, showMovies } from './popular';
 
 const API_KEY = 'api_key=1cf50e6248dc270629e802686245c2c8';
 const BASE_URL = 'https://api.themoviedb.org/3';
@@ -37,6 +37,7 @@ function makePagination() {
         type: 'GET',
         url: get_url,
         success: function (response) {
+          showMovies(response.results);
           const arr = new Array(response.total_results);
           done(arr);
         },
