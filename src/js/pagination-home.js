@@ -24,9 +24,11 @@ function onSearch(e) {
     return;
   }
 
+  document.querySelector('.popular__mov').innerHTML = '';
   page = 1;
   get_url = `${BASE_URL}/search/movie?${API_KEY}&language=en-US&include_adult=false&query=${query}`;
 
+  const isSearch = true;
   makePagination();
 }
 makePagination();
@@ -39,6 +41,9 @@ function makePagination() {
         success: function (response) {
           showMovies(response.results);
           const arr = new Array(response.total_results);
+          if (arr.length <= 20) {
+            $('#pagination-container').pagination('hide');
+          }
           done(arr);
         },
       });
