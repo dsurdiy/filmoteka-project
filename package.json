@@ -34,8 +34,6 @@
     "lodash": "^4.17.21",
     "lodash.throttle": "^4.1.1",
     "notiflix": "^3.2.5",
-    "paginationjs": "^2.1.5",
-    "simple-lightbox": "^2.1.0",
-    "simplelightbox": "^2.10.3"
+    "paginationjs": "^2.1.5"
   }
 }
