@@ -23,6 +23,7 @@ function onSearch(e) {
   const query = e.currentTarget.elements.searchQuery.value;
 
   if (query === '') {
+    notiflixLoadingRemove();
     return;
   }
 
